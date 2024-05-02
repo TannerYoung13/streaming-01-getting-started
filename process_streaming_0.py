@@ -68,6 +68,9 @@ def stream_row(input_file_name, address_tuple):
         header = next(reader)  # Skip header row
         logging.info(f"Skipped header row: {header}")
 
+        rows = list(reader)
+        rows.reverse()
+
         # use socket enumerated types to configure our socket object
         # Set our address family to (IPV4) for 'internet'
         # Set our socket type to UDP (datagram)

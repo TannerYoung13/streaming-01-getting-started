@@ -45,7 +45,7 @@ def convert_c_to_k(temp_c):
 
 
 def process_rows(input_file_name, output_file_name):
-    """Read from input file, convert temperature, and write to output file."""
+    """Read from input file, convert temperature, reverse rows, and write to output file."""
     logging.info(f"Calling process_rows(): {input_file_name} to {output_file_name}.")
 
     # Create a file object for input (r = read access)
@@ -58,6 +58,10 @@ def process_rows(input_file_name, output_file_name):
         header = next(reader)
         logging.info(f"Skipped header row: {header}")
 
+        # Reverse the order of rows
+        rows = list(reader)
+        rows.reverse()
+
         # Create a file object for output (w = write access)
         # Set the newline parameter to an empty string to avoid extra newlines in the output file
         with open(output_file_name, "w", newline="") as output_file:
@@ -69,8 +73,8 @@ def process_rows(input_file_name, output_file_name):
             # Write the header row to the output file
             writer.writerow(["Year", "Month", "Day", "Time", "TempK"])
 
-            # For each data row in the reader
-            for row in reader:
+            # For each data row in the reversed list of rows
+            for row in rows:
                 # Extract the values from the input row into named variables
                 Year, Month, Day, Time, TempC = row
 
